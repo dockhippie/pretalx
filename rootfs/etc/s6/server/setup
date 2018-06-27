@@ -1,0 +1,92 @@
+#!/bin/bash
+set -eo pipefail
+
+if [[ ! -d ${PRETALX_DATA_DIR} ]]
+then
+  echo "Creating data directory..."
+  mkdir -p ${PRETALX_DATA_DIR}
+fi
+
+if [[ ! -d ${PRETALX_MEDIA_DIR} ]]
+then
+  echo "Creating media directory..."
+  mkdir -p ${PRETALX_MEDIA_DIR}
+fi
+
+if [[ ! -d ${PRETALX_LOGS_DIR} ]]
+then
+  echo "Creating logs directory..."
+  mkdir -p ${PRETALX_LOGS_DIR}
+fi
+
+if [[ ! -d ${PRETALX_STATIC_DIR} ]]
+then
+  echo "Creating static directory..."
+  mkdir -p ${PRETALX_STATIC_DIR}
+fi
+
+if [[ ${PRETALX_SKIP_CHOWN} == "true" ]]
+then
+  echo "Skipping data chown..."
+else
+  echo "Fix data permission..."
+  find ${PRETALX_BASE_DIR} \( \! -user pretalx -o \! -group pretalx \) -print0 | xargs -r -0 chown pretalx:pretalx
+fi
+
+echo "Writing pretalx config..."
+/usr/bin/templater -d \
+  -p pretalx \
+  -o /etc/pretalx/pretalx.cfg \
+  /etc/templates/pretalx.tmpl
+
+if [[ $? -ne 0 ]]
+then
+  echo "Writing config failed!"
+  /bin/s6-svscanctl -t /etc/s6
+  exit 1
+fi
+
+case "${PRETALX_DB_TYPE}" in
+  "mysql")
+    echo "Waiting for mysql..."
+    wait-for-it -t ${PRETALX_DB_TEST_TIMEOUT} ${PRETALX_DB_HOST}:${PRETALX_DB_PORT}
+
+    if [[ $? -ne 0 && "${PRETALX_DB_TEST_FAIL}" == "true" ]]
+    then
+      echo "Database didn't came up in time!"
+      /bin/s6-svscanctl -t /etc/s6
+      exit 1
+    fi
+    ;;
+  "pgsql")
+    echo "Waiting for postgres..."
+    wait-for-it -t ${PRETALX_DB_TEST_TIMEOUT} ${PRETALX_DB_HOST}:${PRETALX_DB_PORT}
+
+    if [[ $? -ne 0 && "${PRETALX_DB_TEST_FAIL}" == "true" ]]
+    then
+      echo "Database didn't came up in time!"
+      /bin/s6-svscanctl -t /etc/s6
+      exit 1
+    fi
+    ;;
+esac
+
+echo "Waiting for celery..."
+wait-for-it -t ${PRETALX_CELERY_TEST_TIMEOUT} ${PRETALX_CELERY_HOST}:${PRETALX_CELERY_PORT}
+
+if [[ $? -ne 0 && "${PRETALX_CELERY_TEST_FAIL}" == "true" ]]
+then
+  echo "Celery didn't came up in time!"
+  /bin/s6-svscanctl -t /etc/s6
+  exit 1
+fi
+
+echo "Waiting for redis..."
+wait-for-it -t ${PRETALX_REDIS_TEST_TIMEOUT} ${PRETALX_REDIS_HOST}:${PRETALX_REDIS_PORT}
+
+if [[ $? -ne 0 && "${PRETALX_REDIS_TEST_FAIL}" == "true" ]]
+then
+  echo "Redis didn't came up in time!"
+  /bin/s6-svscanctl -t /etc/s6
+  exit 1
+fi

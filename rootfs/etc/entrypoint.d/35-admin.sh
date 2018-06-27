@@ -1,0 +1,16 @@
+#!/bin/bash
+set -eo pipefail
+
+declare -x PRETALX_ADMIN_USERNAME
+[[ -z "${PRETALX_ADMIN_USERNAME}" ]] && PRETALX_ADMIN_USERNAME="admin"
+
+declare -x PRETALX_ADMIN_PASSWORD
+[[ -z "${PRETALX_ADMIN_PASSWORD}" ]] && PRETALX_ADMIN_PASSWORD="admin"
+
+declare -x PRETALX_ADMIN_ORGANIZER
+[[ -z "${PRETALX_ADMIN_ORGANIZER}" ]] && PRETALX_ADMIN_ORGANIZER="Conference"
+
+declare -x PRETALX_ADMIN_SLUG
+[[ -z "${PRETALX_ADMIN_SLUG}" ]] && PRETALX_ADMIN_SLUG="conference"
+
+true

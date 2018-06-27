@@ -1,0 +1,5 @@
+#!/bin/bash
+set -eo pipefail
+
+su-exec pretalx python3 \
+  -m pretalx "$@"
