@@ -41,7 +41,7 @@ RUN apk update && \
     wheel \
     redis \
     gunicorn \
-    django_redis
+    django_redis \
     dj_static \
     psycopg2-binary \
     mysqlclient \
