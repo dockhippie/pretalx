@@ -1,11 +1,21 @@
 #!/bin/bash
 set -eo pipefail
 
-CHECK="$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000)"
-
-if [[ "${CHECK}" == "200" ]]
+if [[ $# -ne 1 ]]
 then
-  exit 0
+  echo "Usage: ${0} server|worker"
+  exit 1
 fi
 
-exit 1
+case ${1} in
+  server)
+    exec healthcheck-server
+    ;;
+  worker)
+    exec healthcheck-worker
+    ;;
+  *)
+    echo "Invalid component"
+    exit 2
+    ;;
+esac
