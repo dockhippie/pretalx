@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-CHECK="$(pidof celery)"
+CHECK="$(pgrep celery)"
 
 if [[ "${CHECK}" != "" ]]
 then
