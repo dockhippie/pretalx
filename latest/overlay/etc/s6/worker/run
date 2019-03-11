@@ -18,7 +18,7 @@ then
   done
 fi
 
-echo "Launching pretalx worker..."
+echo "> launching pretalx worker"
 su-exec pretalx celery \
   -A pretalx.celery_app \
   worker \

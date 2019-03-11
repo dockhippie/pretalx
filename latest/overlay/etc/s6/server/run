@@ -18,22 +18,22 @@ then
   done
 fi
 
-echo "Executing pretalx migrate..."
+echo "> executing pretalx migrate"
 su-exec pretalx python3 \
   -m pretalx migrate
 
-echo "Executing pretalx rebuild..."
+echo "> executing pretalx rebuild"
 su-exec pretalx python3 \
   -m pretalx rebuild
 
-echo "Creating admin user..."
+echo "> creating admin user"
 su-exec pretalx create-admin \
   "${PRETALX_ADMIN_USERNAME}" \
   "${PRETALX_ADMIN_PASSWORD}" \
   "${PRETALX_ADMIN_ORGANIZER}" \
   "${PRETALX_ADMIN_SLUG}" \
 
-echo "Launching pretalx server..."
+echo "> launching pretalx server"
 su-exec pretalx gunicorn \
   pretalx.wsgi \
   --name pretalx \
