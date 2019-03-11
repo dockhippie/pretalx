@@ -1,5 +1,6 @@
 # Pretalx
 
+[![Build Status](https://cloud.drone.io/api/badges/dockhippie/pretalx/status.svg)](https://cloud.drone.io/dockhippie/pretalx)
 [![](https://images.microbadger.com/badges/image/webhippie/pretalx.svg)](https://microbadger.com/images/webhippie/pretalx "Get your own image badge on microbadger.com")
 
 These are docker images for [Pretalx](https://pretalx.org) running on an [Python container](https://registry.hub.docker.com/u/webhippie/python/).
@@ -7,7 +8,7 @@ These are docker images for [Pretalx](https://pretalx.org) running on an [Python
 
 ## Versions
 
-To get an overview about the available versions please take a look at the [GitHub branches](https://github.com/dockhippie/pretalx/branches/all) or our [Docker Hub tags](https://hub.docker.com/r/webhippie/pretalx/tags/), these lists are always up to date.
+* [latest](./latest) available as `webhippie/pretalx:latest`
 
 
 ## Volumes
