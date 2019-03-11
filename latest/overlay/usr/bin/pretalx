@@ -1,0 +1,5 @@
+#!/bin/bash
+source /usr/bin/entrypoint
+
+su-exec pretalx python3 \
+  -m pretalx "$@"

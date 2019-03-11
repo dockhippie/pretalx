@@ -1,0 +1,5 @@
+#!/bin/bash
+source /usr/bin/entrypoint
+
+rm -f /etc/s6/worker/down
+exec s6-svscan /etc/s6
