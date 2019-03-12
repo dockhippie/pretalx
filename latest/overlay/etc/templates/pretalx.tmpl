@@ -30,7 +30,7 @@ ssl = {{ getenv "PRETALX_MAIL_SSL" }}
 backend = redis://{{ getenv "PRETALX_CELERY_HOST" }}:{{ getenv "PRETALX_CELERY_PORT" }}/{{ getenv "PRETALX_CELERY_BACKENDDB" }}
 broker = redis://{{ getenv "PRETALX_CELERY_HOST" }}:{{ getenv "PRETALX_CELERY_PORT" }}/{{ getenv "PRETALX_CELERY_BROKERDB" }}
 
-{{ if ne (envString "REDIS") "" }}
+{{ if ne (getenv "PRETALX_REDIS") "" }}
 [redis]
 location = {{ getenv "PRETALX_REDIS" }}
 session = {{ getenv "PRETALX_REDIS_SESSION" }}
