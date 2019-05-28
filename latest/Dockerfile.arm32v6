@@ -1,4 +1,4 @@
-FROM webhippie/python:latest-arm32v6
+FROM webhippie/python:3.6-arm32v6
 
 LABEL maintainer="Thomas Boerger <thomas@webhippie.de>" \
   org.label-schema.name="Pretalx" \
