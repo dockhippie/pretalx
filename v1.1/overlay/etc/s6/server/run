@@ -1,0 +1,44 @@
+#!/bin/bash
+
+if [ -f ./setup ]
+then
+  source ./setup
+fi
+
+if [ -f ./custom ]
+then
+  source ./custom
+fi
+
+if [ -d ./custom.d ]
+then
+  for FILE in $(find ./custom.d -type f -iname \*.sh | sort)
+  do
+    source ${FILE}
+  done
+fi
+
+echo "> executing pretalx migrate"
+su-exec pretalx python3 \
+  -m pretalx migrate
+
+echo "> executing pretalx rebuild"
+su-exec pretalx python3 \
+  -m pretalx rebuild
+
+echo "> creating admin user"
+su-exec pretalx create-admin \
+  "${PRETALX_ADMIN_USERNAME}" \
+  "${PRETALX_ADMIN_PASSWORD}" \
+  "${PRETALX_ADMIN_ORGANIZER}" \
+  "${PRETALX_ADMIN_SLUG}" \
+
+echo "> launching pretalx server"
+su-exec pretalx gunicorn \
+  pretalx.wsgi \
+  --name pretalx \
+  --workers 5 \
+  --max-requests 1000 \
+  --max-requests-jitter 50 \
+  --log-level=info \
+  --bind=0.0.0.0:3000
