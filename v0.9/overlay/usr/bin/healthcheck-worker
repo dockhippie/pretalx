@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+source /usr/bin/entrypoint
+
+CHECK="$(pgrep celery)"
+
+if [[ "${CHECK}" != "" ]]
+then
+  exit 0
+fi
+
+exit 1
