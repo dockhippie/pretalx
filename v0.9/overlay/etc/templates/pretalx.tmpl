@@ -1,0 +1,37 @@
+[filesystem]
+data = {{ getenv "PRETALX_DATA_DIR" }}
+media = {{ getenv "PRETALX_MEDIA_DIR" }}
+logs = {{ getenv "PRETALX_LOGS_DIR" }}
+static = {{ getenv "PRETALX_STATIC_DIR" }}
+
+[database]
+backend = {{ getenv "PRETALX_DB_TYPE" }}
+name = {{ getenv "PRETALX_DB_DATABASE" }}
+user = {{ getenv "PRETALX_DB_USERNAME" }}
+password = {{ getenv "PRETALX_DB_PASSWORD" }}
+host = {{ getenv "PRETALX_DB_HOST" }}
+port = {{ getenv "PRETALX_DB_PORT" }}
+
+[site]
+debug = {{ getenv "PRETALX_SITE_DEBUG" }}
+url = {{ getenv "PRETALX_SITE_URL" }}
+secret = {{ getenv "PRETALX_SITE_SECRET" }}
+
+[mail]
+from = {{ getenv "PRETALX_MAIL_FROM" }}
+host = {{ getenv "PRETALX_MAIL_HOST" }}
+port = {{ getenv "PRETALX_MAIL_PORT" }}
+user = {{ getenv "PRETALX_MAIL_USERNAME" }}
+password = {{ getenv "PRETALX_MAIL_PASSWORD" }}
+tls = {{ getenv "PRETALX_MAIL_TLS" }}
+ssl = {{ getenv "PRETALX_MAIL_SSL" }}
+
+[celery]
+backend = redis://{{ getenv "PRETALX_CELERY_HOST" }}:{{ getenv "PRETALX_CELERY_PORT" }}/{{ getenv "PRETALX_CELERY_BACKENDDB" }}
+broker = redis://{{ getenv "PRETALX_CELERY_HOST" }}:{{ getenv "PRETALX_CELERY_PORT" }}/{{ getenv "PRETALX_CELERY_BROKERDB" }}
+
+{{ if ne (getenv "PRETALX_REDIS") "" }}
+[redis]
+location = {{ getenv "PRETALX_REDIS" }}
+session = {{ getenv "PRETALX_REDIS_SESSION" }}
+{{ end }}
