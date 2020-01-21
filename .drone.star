@@ -16,6 +16,9 @@ def main(ctx):
         'path': 'v1.1',
         'tag': '1.1',
       },
+        'path': 'v0.8',
+        'tag': '0.8',
+      }
       {
         'path': 'v0.7',
         'tag': '0.7',
