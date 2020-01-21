@@ -1,5 +1,8 @@
 #!/bin/bash
 
+declare -x PRETALX_ROOT_DIR
+PRETALX_ROOT_DIR="/usr/lib/python3.6/site-packages/pretalx"
+
 declare -x PRETALX_BASE_DIR
 [[ -z "${PRETALX_BASE_DIR}" ]] && PRETALX_BASE_DIR="/var/lib/pretalx"
 

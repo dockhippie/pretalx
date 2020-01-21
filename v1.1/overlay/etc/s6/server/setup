@@ -31,6 +31,7 @@ then
 else
   echo "> fix data permission"
   find ${PRETALX_BASE_DIR} \( \! -user pretalx -o \! -group pretalx \) -print0 | xargs -r -0 chown pretalx:pretalx
+  find ${PRETALX_ROOT_DIR} \( \! -user pretalx -o \! -group pretalx \) -print0 | xargs -r -0 chown pretalx:pretalx
 fi
 
 echo "> writing pretalx config"

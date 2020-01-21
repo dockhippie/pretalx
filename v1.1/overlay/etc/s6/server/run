@@ -25,6 +25,8 @@ su-exec pretalx python3 \
 echo "> executing pretalx rebuild"
 su-exec pretalx python3 \
   -m pretalx rebuild
+su-exec pretalx python3 \
+  -m pretalx regenerate_css
 
 echo "> creating admin user"
 su-exec pretalx create-admin \

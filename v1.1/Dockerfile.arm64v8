@@ -18,7 +18,7 @@ RUN apk update && \
   groupadd -g 1000 pretalx && \
   useradd -u 1000 -d /var/lib/pretalx -g pretalx -s /bin/bash -M pretalx && \
   apk add libxml2-dev libxslt-dev libressl-dev jpeg-dev mariadb-dev postgresql-dev sqlite-dev gettext && \
-  pip3 install -U pretalx==1.1.2 setuptools wheel redis gunicorn django_redis dj_static psycopg2-binary mysqlclient && \
+  pip3 install -U pretalx==1.1.2 setuptools wheel typing redis gunicorn django_redis psycopg2-binary mysqlclient && \
   rm -rf /var/cache/apk/*
 
 COPY ./overlay ./overlay-arm64v8 /
