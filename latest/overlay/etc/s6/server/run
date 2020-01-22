@@ -21,6 +21,8 @@ fi
 echo "> executing pretalx migrate"
 su-exec pretalx python3 \
   -m pretalx migrate
+su-exec pretalx python3 \
+  -m pretalx regenerate_css
 
 echo "> executing pretalx rebuild"
 su-exec pretalx python3 \
