@@ -1,4 +1,4 @@
-FROM webhippie/python:3.7-arm64v8
+FROM webhippie/python:3.7-arm64v8@sha256:4c835f6d11f3bb012757b90084571dd25319738b49beef0fc31893155b1b8934
 
 LABEL maintainer="Thomas Boerger <thomas@webhippie.de>" \
   org.label-schema.name="Pretalx" \
